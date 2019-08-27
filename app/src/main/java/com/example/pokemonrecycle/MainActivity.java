@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -35,14 +37,13 @@ public class MainActivity extends AppCompatActivity {
         String link = "https://next.json-generator.com/api/json/get/E14trR2lD";
         try {
             String data = new Asycdata().execute(link).get();
-            System.out.println("This is from Main Activity :"+data);
+            System.out.println("This is from Main Activity :" + data);
 
 
             JSONObject mainobj = new JSONObject(data);
             JSONArray pokearray = mainobj.getJSONArray("Pokemon");
 
-            for (int i=0;i<pokearray.length();i++)
-            {
+            for (int i = 0; i < pokearray.length(); i++) {
                 JSONObject child = pokearray.getJSONObject(i);
 
                 String img = child.getString("image");
@@ -56,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 String keyname = child.toString();
 
 
-                pokelst.add(new Pokemon(name,img,type,ability,height,weight,desc));
+                pokelst.add(new Pokemon(name, img, type, ability, height, weight, desc));
             }
 
-                adapter = new Poekrecyadapter(pokelst,getApplication());
-                initView();
+            adapter = new Poekrecyadapter(pokelst, getApplication());
+            initView();
 
 
         } catch (ExecutionException e) {
@@ -74,14 +75,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void initView()
-    {
-        @SuppressLint("WrongConstant") LinearLayoutManager linearLayout = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+    public void initView() {
+        @SuppressLint("WrongConstant") LinearLayoutManager linearLayout = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         RecyclerView recyclerView = findViewById(R.id.recycle_poke);
         recyclerView.setLayoutManager(linearLayout);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListner(onItemclclickpoke);
     }
+
+    //public void display(View view) {
+
+      //Intent intent = new Intent(MainActivity.this, pokemondesc.class);
+        //TextView tv = (TextView) findViewById(R.id.poke_name);
+        //ImageView img = (ImageView) findViewById(R.id.poke_image);
+       // intent.putExtra("textViewText", tv.getText().toString());
+      //  startActivity(intent); */
+
 
     public View.OnClickListener onItemclclickpoke = new View.OnClickListener() {
         @Override
@@ -90,9 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
+            Intent i = new Intent(MainActivity.this,pokemondesc.class);
 
-            Toast.makeText(getApplicationContext(),pokelst.get(position).getName(),Toast.LENGTH_SHORT).show();
+            i.putExtra("data",pokelst.get(position));
+            startActivity(i);
+            /*Toast.makeText(getApplicationContext(),pokelst.get(position).getName(),Toast.LENGTH_SHORT).show();*/
 
         }
     };
 }
+
