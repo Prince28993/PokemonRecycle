@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class pokemondesc extends AppCompatActivity {
 
     ImageView pimg;
-    TextView pname,pdesc,ptype;
+    TextView pname,pdesc,ptype,pweight;
 
 
     @Override
@@ -22,6 +22,7 @@ public class pokemondesc extends AppCompatActivity {
         pname = findViewById(R.id.textView);
         pdesc = findViewById(R.id.textView2);
         ptype  = findViewById(R.id.textView3);
+        pweight = findViewById(R.id.textView4);
         Intent i = getIntent();
 
         Pokemon p = i.getParcelableExtra("data");
@@ -31,5 +32,6 @@ public class pokemondesc extends AppCompatActivity {
         pname.setText(p.getName());
         pdesc.setText(p.getHeight());
         ptype.setText(""+p.getType());
+        pweight.setText(p.getWeight());
     }
 }
