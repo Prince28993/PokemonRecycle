@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 public class pokemondesc extends AppCompatActivity {
 
@@ -33,5 +34,6 @@ public class pokemondesc extends AppCompatActivity {
         pdesc.setText(p.getHeight());
         ptype.setText(""+p.getType());
         pweight.setText(p.getWeight());
+        Picasso.get().load(p.getImage()).into(pimg);
     }
 }
